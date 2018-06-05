@@ -1,22 +1,4 @@
 class Solution(object):
-	def __init__(self):
-		self.Count_coins = {}
-
-	def Min_coins(self,coins, amount):
-		# raw_input()
-		L = len(coins)
-		if L == 0  or amount < 0:
-			return 1e100
-		if amount == 0 :
-			self.Count_coins[str(amount)] = 0
-			return self.Count_coins[str(amount)]
-		else:
-			if amount in self.Count_coins.keys():
-				return self.Count_coins[str(amount)]
-			else:
-				self.Count_coins[str(amount)] = min(1+self.Min_coins(coins,amount-coins[L-1]),self.Min_coins(coins[:L-1],amount))
-				return self.Count_coins[str(amount)]
-
 
 	def coinChange(self, coins, amount):
 		"""
@@ -24,11 +6,21 @@ class Solution(object):
 		:type amount: int
 		:rtype: int
 		"""
-		self.Min_coins(coins,amount)
-		if self.Count_coins[str(amount)] >=1e100:
+		Count_coins = [1e100 for i in range(amount+1)]
+		Count_coins[0] = 0
+		for i in range(1,amount+1):
+			for coin in coins:
+				if coin <=i:
+					tmp = Count_coins[i-coin]
+					if tmp!=1e100and tmp<Count_coins[i]:
+						Count_coins[i] = tmp+1
+		# print Count_coins
+		if Count_coins[amount] == 1e100:
 			return -1
-		return self.Count_coins[str(amount)]
+		return Count_coins[amount]
+
+
 obj = Solution()
-print obj.coinChange([5,2,1],30)
+print obj.coinChange([1,2,5],30)
 
         
