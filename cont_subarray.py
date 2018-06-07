@@ -7,8 +7,6 @@ class Solution1(object):
 		:rtype: bool
 		"""
 		sum_upto = np.zeros((len(nums),len(nums)))
-		if k == 1 and len(nums)>1:
-			return True
 		for i in range(len(nums)):
 			sum_upto[i][i] = nums[i]
 		for i in range(len(nums)):
